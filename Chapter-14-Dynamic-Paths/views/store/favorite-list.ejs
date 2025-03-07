@@ -1,0 +1,67 @@
+<%- include('../partials/head') %>
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Navbar -->
+  <%- include('../partials/nav') %>
+
+  <!-- Main Content -->
+  <main class="flex flex-col items-center justify-center min-h-screen py-10 px-4 md:px-8 lg:px-16">
+    
+    <!-- Title -->
+    <div class="text-center mb-10">
+      <h2 class="text-5xl font-bold text-gray-900 animate-fade-in">
+        Your Favorite Homes ❤️
+      </h2>
+      <p class="text-gray-600 mt-3">Explore your saved homes and book your next stay with ease.</p>
+    </div>
+
+    <!-- Favorites Grid -->
+    <div class="relative w-full">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <% registeredHomes.forEach(home => { %>
+        <div class="group bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:shadow-2xl transition duration-500 transform hover:-translate-y-2 animate-fade-up">
+          
+          <!-- Home Image with Overlay -->
+          <div class="relative overflow-hidden">
+            <img src="<%= home.photoUrl %>" alt="Home Image" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <button class="px-4 py-2 bg-white text-gray-900 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition">
+                View Details
+              </button>
+            </div>
+            <span class="absolute top-3 right-3 bg-red-500 text-white text-sm px-3 py-1 rounded-full shadow-md">
+              <i class="fas fa-star"></i> <%= home.rating %>
+            </span>
+          </div>
+
+          <!-- Home Details -->
+          <div class="p-6 space-y-3">
+            <h3 class="text-2xl font-semibold text-gray-900"><%= home.home %></h3>
+            <p class="text-gray-600 flex items-center gap-2">
+              <i class="fas fa-map-marker-alt text-red-500"></i> <%= home.Location %>
+            </p>
+
+            <!-- Price and Rating -->
+            <div class="flex justify-between items-center">
+              <span class="text-lg font-semibold text-red-500">$<%= home.price %> / night</span>
+              <span class="flex items-center text-yellow-500 font-semibold">
+                <i class="fas fa-star"></i> <%= home.rating %>
+              </span>
+            </div>
+
+            <!-- Animated Buttons -->
+            <div class="flex flex-col gap-3 mt-4">
+              <button class="w-full bg-red-500 text-white py-3 rounded-lg shadow-md hover:bg-red-600 hover:scale-105 transition duration-300">
+                Book Now
+              </button>
+            </div>
+          </div>
+
+        </div>
+        <% }); %>
+      </div>
+    </div>
+
+  </main>
+</body>
+</html>

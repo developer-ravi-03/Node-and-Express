@@ -1,0 +1,40 @@
+<nav class="bg-white shadow-md p-5 sticky top-0 z-10">
+  <div class="container mx-auto flex justify-between items-center">
+    <!-- Brand Logo -->
+    <a href="/"
+      class="<%= currentPage === 'index' %>text-red-600 text-3xl font-extrabold tracking-wide">Airbnb</a>
+
+    <!-- Navigation Links -->
+    <div class="flex space-x-6">
+      <a href="/home"
+        class="relative text-lg font-medium transition duration-300 pb-1 
+        <%= currentPage === 'Home' ? 'text-red-600 font-bold after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-red-500' : 'text-gray-700 hover:text-red-500' %>">
+        Home List
+      </a>
+
+      <a href="/favorites"
+        class="relative text-lg font-medium transition duration-300 pb-1 
+        <%= currentPage === 'Favorites' ? 'text-red-600 font-bold after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-red-500' : 'text-gray-700 hover:text-red-500' %>">
+        Favorites
+      </a>
+
+      <a href="/bookings"
+        class="relative text-lg font-medium transition duration-300 pb-1 
+        <%= currentPage === 'Bookings' ? 'text-red-600 font-bold after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-red-500' : 'text-gray-700 hover:text-red-500' %>">
+        Bookings
+      </a>
+
+      <a href="/host/host-home-list"
+        class="relative text-lg font-medium transition duration-300 pb-1 
+        <%= currentPage === 'host-homes' ? 'text-red-600 font-bold after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-red-500' : 'text-gray-700 hover:text-red-500' %>">
+        Host Home
+      </a>
+
+      <a href="/host/add-home"
+        class="relative text-lg font-medium transition duration-300 pb-1 
+        <%= currentPage === 'Add-Home' ? 'text-red-600 font-bold after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-red-500' : 'text-gray-700 hover:text-red-500' %>">
+        Add Home
+      </a>
+    </div>
+  </div>
+</nav>

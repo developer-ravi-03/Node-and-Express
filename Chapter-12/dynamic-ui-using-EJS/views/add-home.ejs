@@ -1,0 +1,21 @@
+<%- include('partials/head') %>
+  </head>
+  <body class="bg-gray-50 font-sans">
+    <!-- Navbar -->
+    <%- include('partials/nav') %>
+
+    <!-- Add Home Form Section -->
+    <main
+      class="container mx-auto my-16 p-8 bg-white shadow-lg rounded-lg max-w-lg">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Register
+        Your Home</h2>
+      <form action="/add-home" method="POST" class="space-y-4">
+        <input type="text" name="username" placeholder="Enter Home"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+
+        <button type="submit"
+          class="w-full bg-red-600 text-white py-3 rounded-lg shadow-lg text-lg font-semibold hover:bg-red-700 transition duration-300">Submit</button>
+      </form>
+    </main>
+  </body>
+</html>
