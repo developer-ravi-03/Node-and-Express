@@ -9,6 +9,7 @@ const {
   getIndex,
   getFavoriteItem,
   getHomeDetails,
+  postAddToFavourite,
 } = require("../controller/storeController");
 
 storeRouter.get("/", getIndex);
@@ -17,7 +18,8 @@ storeRouter.get("/bookings", getBookings);
 storeRouter.get("/Favorites", getFavoriteItem);
 
 // storeRouter.get("/homes/:homeId", getHomeDetails);
-storeRouter.get("/homes/:homeId",getHomeDetails);
+storeRouter.get("/homes/:homeId", getHomeDetails);
 
+storeRouter.post("/Favorites", postAddToFavourite);
 
 module.exports = storeRouter;

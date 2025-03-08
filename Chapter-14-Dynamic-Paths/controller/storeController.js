@@ -1,3 +1,4 @@
+const Favourite = require("../models/favorite");
 const Home = require("../models/home");
 
 exports.getIndex = (req, res, next) => {
@@ -28,14 +29,40 @@ exports.getBookings = (req, res, next) => {
 };
 
 exports.getFavoriteItem = (req, res, next) => {
-  Home.fetchAll((registeredHomes) =>
-    res.render("store/favorite-list", {
-      registeredHomes: registeredHomes,
-      pageTitle: "Favorite items",
-      currentPage: "Favorites",
-    })
-  );
+  Favourite.getFavourites((favourites) => {
+    Home.fetchAll((registeredHomes) => {
+      const favouriteHomes = registeredHomes.filter((home) =>
+        favourites.includes(home.id)
+      );
+      res.render("store/favorite-list", {
+        favouriteHomes: favouriteHomes,
+        pageTitle: "My Favourites",
+        currentPage: "Favorites",
+      });
+    });
+  });
 };
+
+exports.postAddToFavourite = (req, res, next) => {
+  console.log("At postAddToFavourite", req.body.id);
+
+  Favourite.addToFavourite(req.body.id, (error) => {
+    if (error) {
+      console.log("Error while marking favourite: ", error);
+    }
+    res.redirect("/favorites");
+  });
+};
+
+// exports.postRemoveFromFavourite = (req, res, next) => {
+//   const homeId = req.params.homeId;
+//   Favourite.deleteById(homeId, (error) => {
+//     if (error) {
+//       console.log("Error while removing from Favourite", error);
+//     }
+//     res.redirect("/favourites");
+//   });
+// };
 
 exports.getHomeDetails = (req, res, next) => {
   const homeId = req.params.homeId;
@@ -54,22 +81,3 @@ exports.getHomeDetails = (req, res, next) => {
     }
   });
 };
-
-// exports.getHomeDetails = (req, res, next) => {
-//   const homeId = req.params.homeId;
-//   console.log("Received homeId:", homeId);  // Debugging log
-
-//   Home.findById(homeId, (home) => {
-//     console.log("Home found:", home);
-
-//     if (!home) {
-//       return res.status(404).send("Home not found");
-//     }
-
-//     res.render("store/home-detail", {
-//       home: home,
-//       pageTitle: "Home Details",
-//       currentPage: "home-details",
-//     });
-//   });
-// };
