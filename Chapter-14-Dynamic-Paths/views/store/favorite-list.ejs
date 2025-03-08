@@ -62,11 +62,10 @@
               <button class="w-full bg-red-500 text-white py-3 rounded-lg shadow-md hover:bg-red-600 hover:scale-105 transition duration-300">
                 Book Now
               </button>
-              <form action="/remove-favorite" method="POST">
-                <input type="hidden" name="homeId" value="<%= home.id %>">
+              <form action="/remove-favorite/<%= home.id%>" method="POST">
                 <button type="submit" class="w-full bg-gray-300 text-gray-800 py-3 rounded-lg shadow-md hover:bg-gray-400 hover:scale-105 transition duration-300">
                   Remove from Favorite
-                </button>
+                </button> 
               </form>
             </div>
           </div>

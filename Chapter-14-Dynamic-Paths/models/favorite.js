@@ -30,9 +30,9 @@ module.exports = class Favourite {
   }
 
   static deleteById(delHomeId, callback) {
-    Favourite.getFavourites((homeIds) => {
-      homeIds = homeIds.filter((homeId) => delHomeId !== homeId);
-      fs.writeFile(favouriteDataPath, JSON.stringify(homeIds), callback);
+    Favourite.getFavourites((favourites) => {
+      favourites = favourites.filter((homeId) => homeId !== delHomeId);
+      fs.writeFile(favouriteDataPath, JSON.stringify(favourites), callback);
     });
   }
 };
