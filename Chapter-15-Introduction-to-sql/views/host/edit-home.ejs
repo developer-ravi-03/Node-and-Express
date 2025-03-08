@@ -1,0 +1,47 @@
+<%- include('../partials/head') %>
+  </head>
+  <body class="bg-gray-50 font-sans">
+    <!-- Navbar -->
+    <%- include('../partials/nav') %>
+
+    <!-- Add Home Form Section -->
+    <main
+      class="container mx-auto my-16 p-8 bg-white shadow-lg rounded-lg max-w-lg">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center"><%= editing ? "Edit": "Register"%> Your Home</h2>
+      <form action="/host/<%= editing ? 'edit-home' : 'add-home'%>" method="POST" class="space-y-4">
+        <input type="hidden" name="id" value="<%= editing ? home.id : ''%>">
+        <input 
+        value="<%= editing ? home.home : ''%>"
+        type="text" name="home" placeholder="Enter Home"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+
+          <input
+          value="<%= editing ? home.price : ''%>"
+           type="text" name="price" placeholder="Enter Price"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+
+          <input 
+          value="<%= editing ? home.Location : ''%>"
+          type="text" name="Location" placeholder="Enter Location"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+
+          <input 
+          value="<%= editing ? home.rating : ''%>"
+          type="text" name="rating" placeholder="Enter Rating"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+
+          <input 
+          value="<%= editing ? home.photoUrl : ''%>"
+          type="text" name="photoUrl" placeholder="Enter photoUrl"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+
+          <textarea 
+            type="text" name="description" placeholder="Describe your home"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"><%= editing ? home.description : ''%></textarea>
+
+        <button type="submit"
+          class="w-full bg-red-600 text-white py-3 rounded-lg shadow-lg text-lg font-semibold hover:bg-red-700 transition duration-300"><%= editing ? "Update home" : "Submit"%></button>
+      </form>
+    </main>
+  </body>
+</html>
