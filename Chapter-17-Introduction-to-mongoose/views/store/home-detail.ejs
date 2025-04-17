@@ -1,0 +1,69 @@
+<%- include('../partials/head') %>
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Navbar -->
+  <%- include('../partials/nav') %>
+
+  <!-- Main Content -->
+  <div class="container mx-auto px-6 py-12 animate-fade-in">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      
+      <!-- Left Side: Image (Now has a controlled width) -->
+      <div class="relative flex justify-center">
+        <div class="w-full sm:w-4/5 lg:w-3/4 overflow-hidden rounded-lg shadow-lg">
+          <img src="<%= home.photoUrl %>" alt="Home Image" 
+               class="w-full h-72 object-cover transition-transform duration-500 hover:scale-105">
+        </div>
+      </div>
+
+      <!-- Right Side: Home Details -->
+      <div class="space-y-5">
+        <h2 class="text-3xl font-extrabold text-gray-900"><%= home.home %></h2>
+        <p class="text-md text-gray-600 flex items-center">
+          <i class="fas fa-map-marker-alt text-red-500 mr-2"></i> <%= home.Location %>
+        </p>
+
+        <!-- ⭐ Improved Rating Section -->
+        <div class="flex items-center space-x-2">
+          <% let fullStars = Math.floor(home.rating); %>
+          <% let halfStar = home.rating % 1 !== 0; %>
+          <% for (let i = 0; i < fullStars; i++) { %>
+            <i class="fas fa-star text-yellow-400 text-xl"></i>
+          <% } %>
+          <% if (halfStar) { %>
+            <i class="fas fa-star-half-alt text-yellow-400 text-xl"></i>
+          <% } %>
+          <% for (let i = fullStars + (halfStar ? 1 : 0); i < 5; i++) { %>
+            <i class="far fa-star text-gray-300 text-xl"></i>
+          <% } %>
+          <span class="text-gray-700 text-lg font-medium ml-2">(<%= home.rating %> Ratings)</span>
+        </div>
+
+        <p class="text-gray-700 leading-relaxed">
+          <%= home.description %>
+        </p>
+        <span class="text-2xl font-semibold text-red-500">$<%= home.price %> / night</span>
+
+        <%- include('../partials/favorite') %>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="p-4 bg-white shadow-md rounded-lg flex items-center space-x-3 transition-all duration-300 hover:scale-105">
+        <i class="fas fa-wifi text-xl text-red-500"></i>
+        <span class="text-md font-medium text-gray-800">Free WiFi</span>
+      </div>
+      <div class="p-4 bg-white shadow-md rounded-lg flex items-center space-x-3 transition-all duration-300 hover:scale-105">
+        <i class="fas fa-swimming-pool text-xl text-red-500"></i>
+        <span class="text-md font-medium text-gray-800">Swimming Pool</span>
+      </div>
+      <div class="p-4 bg-white shadow-md rounded-lg flex items-center space-x-3 transition-all duration-300 hover:scale-105">
+        <i class="fas fa-utensils text-xl text-red-500"></i>
+        <span class="text-md font-medium text-gray-800">Breakfast Included</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
