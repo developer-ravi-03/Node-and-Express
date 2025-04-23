@@ -1,56 +1,71 @@
-const { ObjectId } = require("mongodb");
-module.exports = class Home {
-  constructor(home, price, Location, rating, photoUrl, description, _id) {
-    this.home = home;
-    this.price = price;
-    this.Location = Location;
-    this.rating = rating;
-    this.photoUrl = photoUrl;
-    this.description = description;
-    if (_id) {
-      this._id = _id;
-    }
-  }
+const { mongoose } = require("mongoose");
 
-  save() {
-    const db = getDb();
-    if (this._id) {
-      const updateFields = {
-        home: this.home,
-        price: this.price,
-        Location: this.Location,
-        rating: this.rating,
-        photoUrl: this.photoUrl,
-        description: this.description,
-      };
-      return db
-        .collection("homes")
-        .updateOne(
-          { _id: new ObjectId(String(this._id)) },
-          { $set: updateFields }
-        );
-    } else {
-      return db.collection("homes").insertOne(this);
-    }
-  }
+const homeSchema = mongoose.Schema({
+  home: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  Location: {
+    type: String,
+    required: true,
+  },
+  rating: {
+    type: String,
+    required: true,
+  },
+  photoUrl: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
+});
 
-  static fetchAll() {
-    const db = getDb();
-    return db.collection("homes").find().toArray();
-  }
+module.exports = mongoose.model("Home", homeSchema);
 
-  static findById(homeId) {
-    const db = getDb();
-    return db
-      .collection("homes")
-      .find({ _id: new ObjectId(String(homeId)) })
-      .next();
-  }
+//   save() {
+//     const db = getDb();
+//     if (this._id) {
+//       const updateFields = {
+//         home: this.home,
+//         price: this.price,
+//         Location: this.Location,
+//         rating: this.rating,
+//         photoUrl: this.photoUrl,
+//         description: this.description,
+//       };
+//       return db
+//         .collection("homes")
+//         .updateOne(
+//           { _id: new ObjectId(String(this._id)) },
+//           { $set: updateFields }
+//         );
+//     } else {
+//       return db.collection("homes").insertOne(this);
+//     }
+//   }
 
-  static deleteById(homeId) {
-    const db = getDb();
-    return db
-      .collection("homes")
-      .deleteOne({ _id: new ObjectId(String(homeId)) });
-  }
-};
+//   static fetchAll() {
+//     const db = getDb();
+//     return db.collection("homes").find().toArray();
+//   }
+
+//   static findById(homeId) {
+//     const db = getDb();
+//     return db
+//       .collection("homes")
+//       .find({ _id: new ObjectId(String(homeId)) })
+//       .next();
+//   }
+
+//   static deleteById(homeId) {
+//     const db = getDb();
+//     return db
+//       .collection("homes")
+//       .deleteOne({ _id: new ObjectId(String(homeId)) });
+//   }
+// };
