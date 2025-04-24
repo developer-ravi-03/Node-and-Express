@@ -27,7 +27,7 @@ exports.getEditHome = (req, res, next) => {
 };
 
 exports.getHostHome = (req, res, next) => {
-  Home.fetchAll().then((registeredHomes) => {
+  Home.find().then((registeredHomes) => {
     res.render("host/host-home-list", {
       registeredHomes: registeredHomes,
       pageTitle: "Host Homes List",
@@ -54,24 +54,34 @@ exports.postAddHome = (req, res, next) => {
 
 exports.postEditHome = (req, res, next) => {
   const { id, home, price, Location, rating, photoUrl, description } = req.body;
-  const house = new Home(
-    home,
-    price,
-    Location,
-    rating,
-    photoUrl,
-    description,
-    id
-  );
-  house.save().then(() => {
-    console.log("Home saved Successfully");
-  });
-  res.redirect("/host/host-home-list");
+  Home.findById(id)
+    .then((house) => {
+      house.home = home;
+      house.price = price;
+      house.Location = Location;
+      house.rating = rating;
+      house.photoUrl = photoUrl;
+      house.description = description;
+
+      house
+        .save()
+        .then((result) => {
+          console.log("Home saved Successfully", result);
+        })
+        .catch((err) => {
+          console.log("Error while saving home:", err);
+        });
+      res.redirect("/host/host-home-list");
+    })
+    .catch((err) => {
+      console.log("Error while finding home:", err);
+      // res.redirect("/host/host-home-list");
+    });
 };
 
 exports.postDeleteHome = (req, res, next) => {
   const homeId = req.params.homeId;
-  Home.deleteById(homeId)
+  Home.findByIdAndDelete(homeId)
     .then(() => {
       res.redirect("/host/host-home-list");
     })

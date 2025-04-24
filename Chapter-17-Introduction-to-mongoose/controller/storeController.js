@@ -2,7 +2,7 @@ const Favourite = require("../models/favorite");
 const Home = require("../models/home");
 
 exports.getIndex = (req, res, next) => {
-  Home.fetchAll().then((registeredHomes) => {
+  Home.find().then((registeredHomes) => {
     res.render("store/index", {
       registeredHomes: registeredHomes,
       pageTitle: "airbnb Home",
@@ -12,7 +12,7 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getHome = (req, res, next) => {
-  Home.fetchAll().then((registeredHomes) => {
+  Home.find().then((registeredHomes) => {
     res.render("store/home-list", {
       registeredHomes: registeredHomes,
       pageTitle: "Homes List",
@@ -29,44 +29,62 @@ exports.getBookings = (req, res, next) => {
 };
 
 exports.getFavoriteItem = (req, res, next) => {
-  Favourite.getFavourites().then((favourites) => {
-    favourites = favourites.map((fav) => fav.homeId);
-    Home.fetchAll().then((registeredHomes) => {
-      console.log("Favourites", favourites);
-      console.log("Registered Homes", registeredHomes);
+  // Favourite.find().then((favourites) => {
+  //   favourites = favourites.map((fav) => fav.homeId.toString());
+  //   Home.find().then((registeredHomes) => {
+  //     console.log("Favourites", favourites);
+  //     console.log("Registered Homes", registeredHomes);
 
-      const favouriteHomes = registeredHomes.filter((home) =>
-        favourites.includes(home._id.toString())
-      );
+  //     const favouriteHomes = registeredHomes.filter((home) =>
+  //       favourites.includes(home._id.toString())
+  //     );
+  //     res.render("store/favorite-list", {
+  //       favouriteHomes: favouriteHomes,
+  //       pageTitle: "My Favourites",
+  //       currentPage: "Favorites",
+  //     });
+  //   });
+  // });
+
+  // Find all favourites and populate the homeId field with the corresponding Home documents
+  //this is another method
+  Favourite.find()
+    .populate("homeId")
+    .then((favourites) => {
+      const favouriteHomes = favourites.map((fav) => fav.homeId);
+      console.log("Favourites", favouriteHomes);
       res.render("store/favorite-list", {
         favouriteHomes: favouriteHomes,
         pageTitle: "My Favourites",
         currentPage: "Favorites",
       });
     });
-  });
 };
 
 exports.postAddToFavourite = (req, res, next) => {
   const homeId = req.body.id;
-  const fav = new Favourite(homeId);
-  fav
-    .save()
-    .then((result) => {
-      console.log("Favourite Added", result);
+
+  Favourite.findOne({ homeId: homeId })
+    .then((fav) => {
+      if (fav) {
+        console.log("Already mark as Favourite", fav);
+      } else {
+        fav = new Favourite({ homeId: homeId });
+        fav.save().then((result) => {
+          console.log("Favourite Added", result);
+        });
+      }
+      res.redirect("/favorites");
     })
     .catch((error) => {
-      console.log("Error while marking favourite: ", error);
-    })
-    .finally(() => {
-      res.redirect("/favorites");
+      console.log("Error while adding to favourite: ", error);
     });
 };
 
 //for remove from favourite
 exports.postRemoveFromFavourite = (req, res, next) => {
   const homeId = req.params.homeId;
-  Favourite.deleteById(homeId)
+  Favourite.findOneAndDelete(homeId)
     .then((result) => {
       console.log("Favourite Removed", result);
     })
