@@ -1,0 +1,7 @@
+--> this is for store session in server side on the place of client side with help of cookie and session
+# for session we use express session
+-  npm install express-session
+
+--> if restart our server than cookie expire than we need to use mongodb session for store the cookie permanent
+# for store in mongo db we need to install connect-mongodb-session
+- 

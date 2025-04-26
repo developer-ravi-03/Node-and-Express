@@ -27,8 +27,15 @@
         class="nav-link <%= currentPage === 'Add-Home' ? 'active' : '' %>">Add
         Home</a>
       <%} %>
+      <% if (!isLoggedIn) { %>
       <a href="/login"
         class="nav-link <%= currentPage === 'login' ? 'active' : '' %>">Login/Sign-up</a>
+      <%} else{%>
+      <form action="/logout" method="post">
+        <button type="submit"
+          class="nav-link">Logout</button>
+      </form>
+      <% } %>
     </div>
 
     <!-- Mobile Dropdown Menu -->
