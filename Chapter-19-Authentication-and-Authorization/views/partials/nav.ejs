@@ -1,61 +1,247 @@
-<nav class="bg-white shadow-md p-5 sticky top-0 z-50">
-  <div class="container mx-auto flex justify-between items-center">
+<nav class="bg-white shadow-lg sticky top-0 z-50 py-4">
+  <div class="container mx-auto px-6">
+    <div class="flex justify-between items-center">
+      <!-- Brand Logo -->
+      <a href="/" class="flex items-center">
+        <svg viewBox="0 0 32 32" class="h-8 w-8 text-red-500 fill-current"
+          aria-hidden="true" role="presentation" focusable="false">
+          <path
+            d="M16 1c2.008 0 3.463.963 4.751 3.269l.533 1.025c1.954 3.83 6.114 12.54 7.1 14.836l.145.353c.667 1.591.91 2.472.96 3.396l.01.415.001.228c0 4.062-2.877 6.478-6.357 6.478-2.224 0-4.556-1.258-6.709-3.386l-.257-.26-.172-.179h-.011l-.176.185c-2.044 2.1-4.267 3.42-6.414 3.63l-.28.023-.267.007c-3.351 0-6.319-2.402-6.319-6.478 0-2.172 1.065-4.286 3.194-6.84l2.157-2.52c3.375-3.886 5.658-6.392 7.74-8.441l.101-.094.202-.176.206-.169c.84-.695 1.585-1.211 2.205-1.511.62-.3 1.215-.45 1.856-.45z"></path>
+        </svg>
+        <span
+          class="ml-2 text-2xl font-bold text-gray-800 tracking-tight">airbnb</span>
+      </a>
 
-    <!-- Brand Logo -->
-    <a href="/"
-      class="text-3xl font-extrabold tracking-wide text-red-600">Airbnb</a>
+      <!-- Search Bar (New Addition) -->
+      <div
+        class="hidden md:flex items-center justify-center flex-1 max-w-md mx-6">
+        <div class="relative w-full">
+          <input type="text" placeholder="Search destinations"
+            class="w-full py-2 pl-10 pr-4 text-gray-700 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all duration-300">
+          <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+            <svg class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </span>
+        </div>
+      </div>
 
-    <!-- Mobile Menu Button (Three Dots) -->
-    <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none">
-      <i class="fas fa-ellipsis-v text-2xl"></i>
-    </button>
+      <!-- Desktop Navigation Links -->
+      <div class="hidden md:flex items-center space-x-1">
+        <!-- Added Explore Homes link for desktop -->
+        <a href="/home"
+          class="nav-link-desktop <%= currentPage === 'Home' ? 'active' : '' %> px-3 py-2">
+          <svg class="inline-block w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          Explore
+        </a>
 
-    <!-- Desktop Navigation Links -->
-    <div id="menu" class="hidden md:flex space-x-6">
-      <a href="/home"
-        class="nav-link <%= currentPage === 'Home' ? 'active' : '' %>">Home
-        List</a>
-      <% if (isLoggedIn) { %>
-      <a href="/favorites"
-        class="nav-link <%= currentPage === 'Favorites' ? 'active' : '' %>">Favorites</a>
-      <a href="/bookings"
-        class="nav-link <%= currentPage === 'Bookings' ? 'active' : '' %>">Bookings</a>
-      <a href="/host/host-home-list"
-        class="nav-link <%= currentPage === 'host-homes' ? 'active' : '' %>">Host
-        Home</a>
-      <a href="/host/add-home"
-        class="nav-link <%= currentPage === 'Add-Home' ? 'active' : '' %>">Add
-        Home</a>
-      <%} %>
-      <% if (!isLoggedIn) { %>
-      <a href="/login"
-        class="nav-link <%= currentPage === 'login' ? 'active' : '' %>">Login/Sign-up</a>
-      <%} else{%>
-      <form action="/logout" method="post">
-        <button type="submit"
-          class="nav-link">Logout</button>
-      </form>
-      <% } %>
+        <% if (!isLoggedIn) { %>
+        <a href="/sign-up"
+          class="nav-link-desktop <%= currentPage === 'sign-up' ? 'active' : '' %> px-3 py-2">
+          Sign up
+        </a>
+        <a href="/login"
+          class="nav-link-desktop <%= currentPage === 'login' ? 'active' : '' %> px-3 py-2">
+          Login
+        </a>
+        <% } else { %>
+        <!-- Host Menu Dropdown -->
+        <div class="relative group">
+          <button
+            class="flex items-center nav-link-desktop px-3 py-2 <%= ['host-homes', 'Add-Home'].includes(currentPage) ? 'active' : '' %>">
+            Host
+            <svg
+              class="ml-1 w-4 h-4 transition-transform duration-200 group-hover:rotate-180"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div
+            class="absolute right-0 w-48 mt-1 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right">
+            <a href="/host/host-home-list"
+              class="dropdown-item <%= currentPage === 'host-homes' ? 'active-dropdown' : '' %>">
+              My Listings
+            </a>
+            <a href="/host/add-home"
+              class="dropdown-item <%= currentPage === 'Add-Home' ? 'active-dropdown' : '' %>">
+              Add New Listing
+            </a>
+          </div>
+        </div>
+
+        <a href="/bookings"
+          class="nav-link-desktop <%= currentPage === 'Bookings' ? 'active' : '' %> px-3 py-2">
+          Trips
+        </a>
+        <a href="/favorites"
+          class="nav-link-desktop <%= currentPage === 'Favorites' ? 'active' : '' %> px-3 py-2">
+          <svg class="inline-block w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2"
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+          Saved
+        </a>
+
+        <!-- User Menu -->
+        <div class="relative group ml-2">
+          <button
+            class="flex items-center space-x-2 px-3 py-2 rounded-full border border-gray-300 hover:shadow-md transition-all duration-300">
+            <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <div
+              class="h-8 w-8 bg-gray-200 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+          </button>
+          <div
+            class="absolute right-0 w-48 mt-2 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-right">
+            <a href="/profile" class="dropdown-item">Profile</a>
+            <a href="/account-settings" class="dropdown-item">Account</a>
+            <div class="border-t border-gray-100"></div>
+            <form action="/logout" method="post">
+              <button type="submit"
+                class="dropdown-item text-left w-full">Logout</button>
+            </form>
+          </div>
+        </div>
+        <% } %>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center">
+        <button id="menu-toggle"
+          class="mobile-menu-button p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+          <svg class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path class="open" stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            <path class="close hidden" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="2"
+              d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <!-- Mobile Dropdown Menu -->
+    <!-- Mobile Navigation Menu -->
     <div id="mobile-menu"
-      class="absolute top-16 right-5 bg-white shadow-lg rounded-lg hidden md:hidden w-48">
-      <a href="/home"
-        class="mobile-link <%= currentPage === 'Home' ? 'active' : '' %>">Home
-        List</a>
+      class="hidden md:hidden mt-4 py-2 bg-white rounded-lg shadow-inner">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <a href="/home"
+          class="mobile-nav-link <%= currentPage === 'Home' ? 'active-mobile' : '' %>">
+          <svg class="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          Explore Homes
+        </a>
 
-      <a href="/logout" class="mobile-link">Logout</a>
-      <a href="/favorites"
-        class="mobile-link <%= currentPage === 'Favorites' ? 'active' : '' %>">Favorites</a>
-      <a href="/bookings"
-        class="mobile-link <%= currentPage === 'Bookings' ? 'active' : '' %>">Bookings</a>
-      <a href="/host/host-home-list"
-        class="mobile-link <%= currentPage === 'host-homes' ? 'active' : '' %>">Host
-        Home</a>
-      <a href="/host/add-home"
-        class="mobile-link <%= currentPage === 'Add-Home' ? 'active' : '' %>">Add
-        Home</a>
+        <% if (!isLoggedIn) { %>
+        <a href="/sign-up"
+          class="mobile-nav-link <%= currentPage === 'sign-up' ? 'active-mobile' : '' %>">
+          <svg class="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2"
+              d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+          </svg>
+          Sign up
+        </a>
+        <a href="/login"
+          class="mobile-nav-link <%= currentPage === 'login' ? 'active-mobile' : '' %>">
+          <svg class="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2"
+              d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+          </svg>
+          Login
+        </a>
+        <% } else { %>
+        <a href="/favorites"
+          class="mobile-nav-link <%= currentPage === 'Favorites' ? 'active-mobile' : '' %>">
+          <svg class="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2"
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+          Saved
+        </a>
+        <a href="/bookings"
+          class="mobile-nav-link <%= currentPage === 'Bookings' ? 'active-mobile' : '' %>">
+          <svg class="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          My Trips
+        </a>
+
+        <!-- Host Section in Mobile -->
+        <div class="border-t border-gray-200 pt-2 mt-2">
+          <div
+            class="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">Hosting</div>
+          <a href="/host/host-home-list"
+            class="mobile-nav-link <%= currentPage === 'host-homes' ? 'active-mobile' : '' %>">
+            <svg class="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            My Listings
+          </a>
+          <a href="/host/add-home"
+            class="mobile-nav-link <%= currentPage === 'Add-Home' ? 'active-mobile' : '' %>">
+            <svg class="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Add New Listing
+          </a>
+        </div>
+
+        <div class="border-t border-gray-200 pt-2 mt-2">
+          <form action="/logout" method="post">
+            <button type="submit"
+              class="mobile-nav-link w-full text-left flex items-center">
+              <svg class="mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Logout
+            </button>
+          </form>
+        </div>
+        <% } %>
+      </div>
     </div>
   </div>
 </nav>
@@ -63,68 +249,103 @@
 <!-- JavaScript for Mobile Menu Toggle -->
 <script>
   document.getElementById("menu-toggle").addEventListener("click", () => {
-    document.getElementById("mobile-menu").classList.toggle("hidden");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const openIcon = document.querySelector(".mobile-menu-button .open");
+    const closeIcon = document.querySelector(".mobile-menu-button .close");
+    
+    mobileMenu.classList.toggle("hidden");
+    openIcon.classList.toggle("hidden");
+    closeIcon.classList.toggle("hidden");
   });
 
-  // Close menu if clicked outside
+  // Close menu when clicking outside
   document.addEventListener("click", (event) => {
-    const menu = document.getElementById("mobile-menu");
-    const toggleButton = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const menuToggle = document.getElementById("menu-toggle");
     
-    if (!menu.contains(event.target) && !toggleButton.contains(event.target)) {
-      menu.classList.add("hidden");
+    if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target) && !mobileMenu.classList.contains("hidden")) {
+      mobileMenu.classList.add("hidden");
+      document.querySelector(".mobile-menu-button .open").classList.remove("hidden");
+      document.querySelector(".mobile-menu-button .close").classList.add("hidden");
     }
   });
 </script>
 
 <!-- Tailwind CSS Styles -->
 <style>
-  .nav-link {
+  .nav-link-desktop {
     position: relative;
-    font-size: 1rem;
     font-weight: 500;
-    color: #374151; /* Gray-700 */
-    transition: color 0.3s ease-in-out;
+    color: #374151;
+    border-radius: 0.375rem;
+    transition: color 0.2s, background-color 0.2s;
   }
 
-  .nav-link:hover {
-    color: #ef4444; /* Red hover */
+  .nav-link-desktop:hover {
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.05);
   }
 
-  .nav-link::after {
+  .nav-link-desktop::after {
     content: "";
     position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 0%;
+    left: 50%;
+    bottom: 0;
     height: 2px;
-    background: #ef4444;
-    transition: width 0.3s ease-in-out;
+    width: 0;
+    background-color: #ef4444;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
   }
 
-  .nav-link:hover::after,
-  .nav-link.active::after {
-    width: 100%;
+  .nav-link-desktop:hover::after,
+  .nav-link-desktop.active::after {
+    width: 80%;
   }
 
-  .nav-link.active {
-    font-weight: bold;
+  .nav-link-desktop.active {
+    color: #ef4444;
+    font-weight: 600;
+  }
+
+  .dropdown-item {
+    display: block;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: #374151;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .dropdown-item:hover {
+    background-color: #f9fafb;
     color: #ef4444;
   }
 
-  /* Mobile Menu Styles */
-  .mobile-link {
-    display: block;
-    padding: 12px 20px;
-    font-size: 1rem;
-    color: #374151;
-    border-bottom: 1px solid #e5e7eb;
-    transition: background 0.3s;
+  .dropdown-item.active-dropdown {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    font-weight: 500;
   }
 
-  .mobile-link:hover,
-  .mobile-link.active {
-    background: #f87171;
-    color: white;
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    font-size: 0.95rem;
+    color: #374151;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .mobile-nav-link:hover {
+    background-color: #f9fafb;
+    color: #ef4444;
+  }
+
+  .mobile-nav-link.active-mobile {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    font-weight: 500;
   }
 </style>

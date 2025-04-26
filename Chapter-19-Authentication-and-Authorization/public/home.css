@@ -39,3 +39,10 @@ a {
 a:hover {
   background: #d70466;
 }
+
+.airbnb-gradient {
+  background: linear-gradient(90deg, #FF385C 0%, #E61E4D 100%);
+}
+.form-control:focus {
+  border-color: #FF385C;
+  box-shadow: 0 0 0 3px rgba(255, 56, 92, 0.2);}
