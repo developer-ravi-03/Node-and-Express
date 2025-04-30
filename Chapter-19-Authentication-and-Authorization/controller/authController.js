@@ -12,18 +12,25 @@ exports.getSignUp = (req, res, next) => {
     pageTitle: "Sign-up To Airbnb",
     currentPage: "sign-up",
     isLoggedIn: false,
+    errors: [],
+    oldInput: {
+      fname: "",
+      lname: "",
+      email: "",
+      userType: "",
+    },
   });
 };
 
 exports.postSignUp = [
-  check("firstName")
+  check("fname")
     .trim()
     .isLength({ min: 2 })
     .withMessage("First name should be atleast 2 characters long")
     .matches(/^[a-zA-Z]+$/)
     .withMessage("First name should only contain alphabets"),
 
-  check("lastName")
+  check("lname")
     .matches(/^[a-zA-Z]+$/)
     .withMessage("Last name should only contain alphabets"),
 
@@ -35,8 +42,8 @@ exports.postSignUp = [
   check("password")
     .isLength({ min: 8 })
     .withMessage("Password should be atleast 8 characters long")
-    .isAlphanumeric()
-    .withMessage("Password should only contain alphabets and numbers")
+    // .isAlphanumeric()
+    // .withMessage("Password should only contain alphabets and numbers")
     .matches(/[A-Z]/)
     .withMessage("Password should contain atleast one uppercase letter")
     .matches(/[a-z]/)
@@ -71,20 +78,20 @@ exports.postSignUp = [
     }),
 
   (req, res, next) => {
-    const { firstName, lastName, email, password, userType } = req.body;
+    const { fname, lname, email, password, userType } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).render("auth/sign-up", {
         pageTitle: "Sign-up To Airbnb",
         currentPage: "sign-up",
         isLoggedIn: false,
-        errorMessage: errors.array().map((err) => err.msg),
+        errors: errors.array().map((err) => err.msg),
         oldInput: {
-          firstName: "",
-          lastName: "",
-          email: "",
-          password: "",
-          userType: "",
+          fname,
+          lname,
+          email,
+          password,
+          userType,
         },
       });
     }
