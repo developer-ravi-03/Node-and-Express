@@ -4,4 +4,8 @@
 
 --> if restart our server than cookie expire than we need to use mongodb session for store the cookie permanent
 # for store in mongo db we need to install connect-mongodb-session
-- 
+-  it helps us to store cookie in our database
+- npm install connect-mongodb-session 
+
+--> Express validator for validate the data 
+- npm install express-validator
