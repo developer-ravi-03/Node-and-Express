@@ -15,3 +15,5 @@
 --> now encryption of password
 - for encryption we use bcrypt js
 - npm i bcryptjs
+
+--> implement login request

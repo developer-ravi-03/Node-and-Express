@@ -6,6 +6,8 @@ exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
     pageTitle: "Login To Airbnb",
     currentPage: "login",
+    errors: [],
+    oldInput: {},
     isLoggedIn: false,
   });
 };
@@ -25,6 +27,7 @@ exports.getSignUp = (req, res, next) => {
   });
 };
 
+//this is for signup
 exports.postSignUp = [
   check("fname")
     .trim()
@@ -165,9 +168,38 @@ exports.postSignUp = [
   },
 ];
 
-exports.postLogin = (req, res, next) => {
-  console.log(req.body);
+//for login
+exports.postLogin = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  //this for check user is exist or not
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(422).render("auth/login", {
+      pageTitle: "Login To Airbnb",
+      currentPage: "login",
+      isLoggedIn: false,
+      errors: ["User does not exist"],
+      oldInput: { email },
+    });
+  }
+
+  //for compare password
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(422).render("auth/login", {
+      pageTitle: "Login To Airbnb",
+      currentPage: "login",
+      isLoggedIn: false,
+      errors: ["invalid password"],
+      oldInput: { email },
+    });
+  }
+
   req.session.isLoggedIn = true;
+  //this line for all user data
+  req.session.user = user;
+  await req.session.save();
   res.redirect("/");
 };
 
