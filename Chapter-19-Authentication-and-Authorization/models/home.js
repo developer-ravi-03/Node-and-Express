@@ -1,5 +1,4 @@
 const { mongoose } = require("mongoose");
-const favourite = require("./favorite"); // Import the favourite model
 
 const homeSchema = mongoose.Schema({
   home: {
@@ -27,10 +26,10 @@ const homeSchema = mongoose.Schema({
 });
 
 //this is for deleteing favorite automatically when home is deleted
-homeSchema.pre("findOneAndDelete", async function (next) {
-  const homeId = this.getQuery()["_id"];
-  await favourite.deleteMany({ homeId: homeId });
-  next();
-});
+// homeSchema.pre("findOneAndDelete", async function (next) {
+//   const homeId = this.getQuery()["_id"];
+//   await favourite.deleteMany({ homeId: homeId });
+//   next();
+// });
 
 module.exports = mongoose.model("Home", homeSchema);

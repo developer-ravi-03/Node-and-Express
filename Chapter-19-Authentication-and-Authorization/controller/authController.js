@@ -7,8 +7,9 @@ exports.getLogin = (req, res, next) => {
     pageTitle: "Login To Airbnb",
     currentPage: "login",
     errors: [],
-    oldInput: {},
+    oldInput: { email: "" },
     isLoggedIn: false,
+    user: {},
   });
 };
 
@@ -17,6 +18,7 @@ exports.getSignUp = (req, res, next) => {
     pageTitle: "Sign-up To Airbnb",
     currentPage: "sign-up",
     isLoggedIn: false,
+    user: {},
     errors: [],
     oldInput: {
       fname: "",
@@ -91,6 +93,7 @@ exports.postSignUp = [
         pageTitle: "Sign-up To Airbnb",
         currentPage: "sign-up",
         isLoggedIn: false,
+        user: {},
         errors: errors.array().map((err) => err.msg),
         oldInput: {
           fname,
@@ -122,6 +125,7 @@ exports.postSignUp = [
         console.log("Error while creating user", err);
         res.status(422).render("auth/sign-up", {
           pageTitle: "Sign-up To Airbnb",
+          user: {},
           currentPage: "sign-up",
           isLoggedIn: false,
           errors: [err],
@@ -179,6 +183,7 @@ exports.postLogin = async (req, res, next) => {
       pageTitle: "Login To Airbnb",
       currentPage: "login",
       isLoggedIn: false,
+      user: {},
       errors: ["User does not exist"],
       oldInput: { email },
     });
@@ -189,6 +194,7 @@ exports.postLogin = async (req, res, next) => {
   if (!isMatch) {
     return res.status(422).render("auth/login", {
       pageTitle: "Login To Airbnb",
+      user: {},
       currentPage: "login",
       isLoggedIn: false,
       errors: ["invalid password"],
