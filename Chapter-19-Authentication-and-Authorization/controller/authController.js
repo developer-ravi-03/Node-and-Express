@@ -1,4 +1,5 @@
 const { check, validationResult } = require("express-validator");
+const User = require("../models/user");
 exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
     pageTitle: "Login To Airbnb",
@@ -96,7 +97,35 @@ exports.postSignUp = [
       });
     }
 
-    res.redirect("/login");
+    const user = new User({
+      firstName: fname,
+      lastName: lname,
+      email,
+      password,
+      userType,
+    });
+    user
+      .save()
+      .then(() => {
+        console.log("User created successfully");
+        res.redirect("/login");
+      })
+      .catch((err) => {
+        console.log("Error while creating user", err);
+        res.status(500).render("auth/sign-up", {
+          pageTitle: "Sign-up To Airbnb",
+          currentPage: "sign-up",
+          isLoggedIn: false,
+          errors: [err.message],
+          oldInput: {
+            fname,
+            lname,
+            email,
+            password,
+            userType,
+          },
+        });
+      });
   },
 ];
 
