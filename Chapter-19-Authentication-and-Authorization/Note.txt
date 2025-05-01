@@ -9,3 +9,9 @@
 
 --> Express validator for validate the data 
 - npm install express-validator
+
+--> create user model
+
+--> now encryption of password
+- for encryption we use bcrypt js
+- npm i bcryptjs

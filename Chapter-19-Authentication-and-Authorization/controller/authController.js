@@ -1,5 +1,7 @@
 const { check, validationResult } = require("express-validator");
 const User = require("../models/user");
+const bcrypt = require("bcryptjs");
+
 exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
     pageTitle: "Login To Airbnb",
@@ -97,26 +99,29 @@ exports.postSignUp = [
       });
     }
 
-    const user = new User({
-      firstName: fname,
-      lastName: lname,
-      email,
-      password,
-      userType,
-    });
-    user
-      .save()
+    //hashing the password and saving in database
+    bcrypt
+      .hash(password, 12)
+      .then((hashedPassword) => {
+        const user = new User({
+          firstName: fname,
+          lastName: lname,
+          email,
+          password: hashedPassword,
+          userType,
+        });
+        return user.save();
+      })
       .then(() => {
-        console.log("User created successfully");
         res.redirect("/login");
       })
       .catch((err) => {
         console.log("Error while creating user", err);
-        res.status(500).render("auth/sign-up", {
+        res.status(422).render("auth/sign-up", {
           pageTitle: "Sign-up To Airbnb",
           currentPage: "sign-up",
           isLoggedIn: false,
-          errors: [err.message],
+          errors: [err],
           oldInput: {
             fname,
             lname,
@@ -126,6 +131,37 @@ exports.postSignUp = [
           },
         });
       });
+
+    // saving the user to database
+    // const user = new User({
+    //   firstName: fname,
+    //   lastName: lname,
+    //   email,
+    //   password,
+    //   userType,
+    // });
+    // user
+    //   .save()
+    //   .then(() => {
+    //     console.log("User created successfully");
+    //     res.redirect("/login");
+    //   })
+    //   .catch((err) => {
+    //     console.log("Error while creating user", err);
+    //     res.status(500).render("auth/sign-up", {
+    //       pageTitle: "Sign-up To Airbnb",
+    //       currentPage: "sign-up",
+    //       isLoggedIn: false,
+    //       errors: [err.message],
+    //       oldInput: {
+    //         fname,
+    //         lname,
+    //         email,
+    //         password,
+    //         userType,
+    //       },
+    //     });
+    //   });
   },
 ];
 
