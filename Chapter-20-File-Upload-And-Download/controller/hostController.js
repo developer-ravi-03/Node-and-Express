@@ -1,5 +1,5 @@
 const Home = require("../models/home");
-
+const fs = require("fs");
 exports.getAddHome = (req, res, next) => {
   res.render("host/edit-home", {
     pageTitle: "Add Home To Airbnb",
@@ -43,8 +43,15 @@ exports.getHostHome = (req, res, next) => {
 };
 
 exports.postAddHome = (req, res, next) => {
-  const { home, price, Location, rating, photo, description } = req.body;
-  console.log(home, price, Location, rating, photo, description);
+  const { home, price, Location, rating, description } = req.body;
+  console.log(home, price, Location, rating, description);
+  console.log(req.file);
+
+  if (!req.file) {
+    return res.status(422).send("no image");
+  }
+
+  const photo = req.file.path;
 
   const house = new Home({
     home,
@@ -61,15 +68,25 @@ exports.postAddHome = (req, res, next) => {
 };
 
 exports.postEditHome = (req, res, next) => {
-  const { id, home, price, Location, rating, photo, description } = req.body;
+  const { id, home, price, Location, rating, description } = req.body;
+
   Home.findById(id)
     .then((house) => {
       house.home = home;
       house.price = price;
       house.Location = Location;
       house.rating = rating;
-      house.photo = photo;
       house.description = description;
+
+      if (req.file) {
+        // this is for deleting the file
+        fs.unlink(house.photo, (err) => {
+          if (err) {
+            console.log("Error in deleting file", err);
+          }
+        });
+        house.photo = req.file.path;
+      }
 
       house
         .save()
