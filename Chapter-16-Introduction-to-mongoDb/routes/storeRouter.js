@@ -7,7 +7,7 @@ const {
   getHome,
   getBookings,
   getIndex,
-  getFavoriteItem,
+  getfavouritesItem,
   getHomeDetails,
   postAddToFavourite,
   postRemoveFromFavourite,
@@ -16,12 +16,12 @@ const {
 storeRouter.get("/", getIndex);
 storeRouter.get("/home", getHome);
 storeRouter.get("/bookings", getBookings);
-storeRouter.get("/Favorites", getFavoriteItem);
+storeRouter.get("/favouritess", getfavouritesItem);
 
 // storeRouter.get("/homes/:homeId", getHomeDetails);
 storeRouter.get("/homes/:homeId", getHomeDetails);
 
-storeRouter.post("/Favorites", postAddToFavourite);
-storeRouter.post("/remove-favorite/:homeId", postRemoveFromFavourite);
+storeRouter.post("/favouritess", postAddToFavourite);
+storeRouter.post("/remove-favourites/:homeId", postRemoveFromFavourite);
 
 module.exports = storeRouter;

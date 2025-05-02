@@ -1,12 +1,12 @@
  <!-- Animated Book Now Button -->
-<form action="/favorites" method="POST">
+<form action="/favouritess" method="POST">
   <!-- Hidden Input for Home ID -->
 
-  <!-- Favorite Button -->
-  <button type="submit" id="favorite-btn"
+  <!-- favourites Button -->
+  <button type="submit" id="favourites-btn"
     class="flex items-center gap-2 bg-gray-200 text-gray-800 px-4 py-2 rounded-lg shadow-md hover:bg-red-500 hover:text-white transition duration-300">
     <i id="heart-icon" class="far fa-heart text-lg"></i>
-    <span id="fav-text">Add to Favorites</span>
+    <span id="fav-text">Add to favouritess</span>
   </button>
   <input type="hidden" name="id" value="<%= home._id %>">
 </form>

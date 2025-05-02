@@ -8,11 +8,11 @@ module.exports = class Favourite {
   save() {
     const db = getDb();
     return db
-      .collection("favorites")
+      .collection("favouritess")
       .findOne({ homeId: this.homeId })
       .then((existingFav) => {
         if (!existingFav) {
-          return db.collection("favorites").insertOne(this);
+          return db.collection("favouritess").insertOne(this);
         }
         return Promise.resolve();
       });
@@ -20,11 +20,11 @@ module.exports = class Favourite {
 
   static getFavourites(callback) {
     const db = getDb();
-    return db.collection("favorites").find().toArray();
+    return db.collection("favouritess").find().toArray();
   }
 
   static deleteById(delHomeId) {
     const db = getDb();
-    return db.collection("favorites").deleteOne({ homeId: delHomeId });
+    return db.collection("favouritess").deleteOne({ homeId: delHomeId });
   }
 };

@@ -1,4 +1,4 @@
-const Favourite = require("../models/favorite");
+const Favourite = require("../models/favourites");
 const Home = require("../models/home");
 
 exports.getIndex = (req, res, next) => {
@@ -28,7 +28,7 @@ exports.getBookings = (req, res, next) => {
   });
 };
 
-exports.getFavoriteItem = (req, res, next) => {
+exports.getfavouritesItem = (req, res, next) => {
   Favourite.getFavourites().then((favourites) => {
     favourites = favourites.map((fav) => fav.homeId);
     Home.fetchAll().then((registeredHomes) => {
@@ -38,10 +38,10 @@ exports.getFavoriteItem = (req, res, next) => {
       const favouriteHomes = registeredHomes.filter((home) =>
         favourites.includes(home._id.toString())
       );
-      res.render("store/favorite-list", {
+      res.render("store/favourites-list", {
         favouriteHomes: favouriteHomes,
         pageTitle: "My Favourites",
-        currentPage: "Favorites",
+        currentPage: "favouritess",
       });
     });
   });
@@ -59,7 +59,7 @@ exports.postAddToFavourite = (req, res, next) => {
       console.log("Error while marking favourite: ", error);
     })
     .finally(() => {
-      res.redirect("/favorites");
+      res.redirect("/favouritess");
     });
 };
 
@@ -74,7 +74,7 @@ exports.postRemoveFromFavourite = (req, res, next) => {
       console.log("Error while removing favourite: ", error);
     })
     .finally(() => {
-      res.redirect("/favorites");
+      res.redirect("/favouritess");
     });
 };
 

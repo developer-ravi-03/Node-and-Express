@@ -10,20 +10,20 @@
     <!-- Title -->
     <div class="text-center mb-10">
       <h2 class="text-5xl font-bold text-gray-900 animate-fade-in">
-        Your Favorite Homes ❤️
+        Your favourites Homes ❤️
       </h2>
       
     </div>
 
     <% if (favouriteHomes.length === 0) { %>
-      <!-- No Favorites Message -->
+      <!-- No favouritess Message -->
       <div class="flex flex-col items-center justify-center text-center">
-        <img src="/images/no-favorites.png" alt="No Favorites" class="w-64 mb-6">
-        <h3 class="text-2xl font-semibold text-gray-700">No Favorite Items!</h3>
+        <img src="/images/no-favouritess.png" alt="No favouritess" class="w-64 mb-6">
+        <h3 class="text-2xl font-semibold text-gray-700">No favourites Items!</h3>
       </div>
     <% } else { %>
     
-    <!-- Favorites Grid -->
+    <!-- favouritess Grid -->
     <div class="relative w-full">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         <% favouriteHomes.forEach(home => { %>
@@ -62,9 +62,9 @@
               <button class="w-full bg-red-500 text-white py-3 rounded-lg shadow-md hover:bg-red-600 hover:scale-105 transition duration-300">
                 Book Now
               </button>
-              <form action="/remove-favorite/<%= home._id%>" method="POST">
+              <form action="/remove-favourites/<%= home._id%>" method="POST">
                 <button type="submit" class="w-full bg-gray-300 text-gray-800 py-3 rounded-lg shadow-md hover:bg-gray-400 hover:scale-105 transition duration-300">
-                  Remove from Favorite
+                  Remove from favourites
                 </button> 
               </form>
             </div>

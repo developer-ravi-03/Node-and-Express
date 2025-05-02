@@ -18,3 +18,6 @@
 
 --> implement login request
 - check user email and password and login them
+
+-->Adding user function
+- 
