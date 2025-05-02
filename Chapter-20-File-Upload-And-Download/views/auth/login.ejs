@@ -1,0 +1,58 @@
+<%- include('../partials/head') %>
+  </head>
+  <body class="bg-gray-50 font-sans">
+    <!-- Navbar -->
+    <%- include('../partials/nav') %>
+
+    <!-- Add Home Form Section -->
+    <main class="container mx-auto my-16 p-8 bg-white shadow-lg rounded-lg max-w-md border border-gray-200">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">Login Your Home</h2>
+        <p class="text-gray-600">Welcome back! Please enter your details</p>
+      </div>
+      
+      <form action="/login" method="POST" class="space-y-6">
+        <%- include('../partials/errors') %>
+        
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-envelope text-gray-400"></i>
+          </div>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            value="<%= oldInput.email ? oldInput.email : ''%>"
+            placeholder="Enter your email"
+            required
+            class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-200"
+          >
+        </div>
+        
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-lock text-gray-400"></i>
+          </div>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+            class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-200"
+          >
+        </div>
+        
+        <button
+          type="submit"
+          class="w-full bg-red-600 text-white py-3 px-4 rounded-lg shadow-md text-lg font-semibold hover:bg-red-700 transform hover:-translate-y-0.5 transition duration-300 ease-in-out"
+        >
+          Login
+        </button>
+        
+        <div class="text-center text-sm text-gray-600 mt-4">
+          <p>Don't have an account? <a href="/sign-up" class="text-red-600 hover:text-red-800 font-medium">Sign up</a></p>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>

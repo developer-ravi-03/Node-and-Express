@@ -1,0 +1,48 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  text-align: center;
+}
+
+/* Header Styles */
+header {
+  background: linear-gradient(135deg, #ff385c, #d70466);
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+/* Main Content */
+main {
+  margin-top: 50px;
+}
+
+a {
+  display: inline-block;
+  background: #ff385c;
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+a:hover {
+  background: #d70466;
+}
+
+.airbnb-gradient {
+  background: linear-gradient(90deg, #FF385C 0%, #E61E4D 100%);
+}
+.form-control:focus {
+  border-color: #FF385C;
+  box-shadow: 0 0 0 3px rgba(255, 56, 92, 0.2);}
