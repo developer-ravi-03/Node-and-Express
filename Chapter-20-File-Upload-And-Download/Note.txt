@@ -1,3 +1,5 @@
 1. multipart - for send multiple data to database
 - download multer for using multipart
 - npm install --save multer
+
+-upload file , deleting the file and serving the file has been done
