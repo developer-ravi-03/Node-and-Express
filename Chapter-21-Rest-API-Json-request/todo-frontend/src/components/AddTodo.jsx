@@ -1,23 +1,10 @@
 /* eslint-disable react/prop-types */
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 
 function AddTodo({ onNewItem }) {
-  // const [todoName, setTodoName] = useState("");
-  // const [dueDate, setDueDate] = useState("");
-
   const todoNameElement = useRef();
   const dueDateElement = useRef();
-
-  // const handleNameChange = (event) => {
-  //   setTodoName(event.target.value);
-  //   noOfUpdates.current += 1;
-  // };
-
-  // const handleDateChange = (event) => {
-  //   setDueDate(event.target.value);
-  //   console.log(`no Nf Updates are : ${noOfUpdates.current}`);
-  // };
 
   const handleAddButtonClicked = (event) => {
     // console.log(event);
@@ -34,34 +21,31 @@ function AddTodo({ onNewItem }) {
   };
 
   return (
-    <div className="container">
-      <form className="row kg-row" onSubmit={handleAddButtonClicked}>
-        <div className="col-6">
+    <div className="w-full max-w-4xl mx-auto">
+      <form
+        className="flex flex-wrap gap-2 items-center"
+        onSubmit={handleAddButtonClicked}
+      >
+        <div className="flex-1 min-w-[250px]">
           <input
             type="text"
-            // value={todoName}
-            // onChange={handleNameChange}
             placeholder="Enter Todo here"
             ref={todoNameElement}
             required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
-        <div className="col-4">
+        <div className="w-full sm:w-auto">
           <input
             type="date"
-            // value={dueDate}
-            // onChange={handleDateChange}
             ref={dueDateElement}
             required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
-        <div className="col-2">
-          <button
-            // type="button"
-            className="btn btn-success kg-button"
-            // onClick={handleAddButtonClicked}
-          >
-            <IoIosAddCircle />
+        <div>
+          <button className="flex items-center justify-center bg-green-500 hover:bg-green-600 text-white p-2 rounded-md transition-colors">
+            <IoIosAddCircle className="text-xl" />
           </button>
         </div>
       </form>
