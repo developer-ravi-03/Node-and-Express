@@ -4,50 +4,14 @@ import "./App.css";
 import TodoItems from "./components/TodoItems";
 import { useState } from "react";
 import WelcomeMessage from "./components/WelcomeMessage";
+import { addItemToServer } from "./services/ItemsService";
 
 function App() {
-  const initialtodoItems = [
-    // {
-    //   name: "Go to college",
-    //   duedate: "06/12/2024",
-    // },
-    // {
-    //   duedate: "right now",
-    //   name: "Subscribe my video",
-    // },
-    // {
-    //   name: "Buy milk",
-    //   duedate: "16/12/2024",
-    // },
-    // {
-    //   name: "Eat pizza",
-    //   duedate: "09/12/2024",
-    // },
-  ];
+  const [todoItems, setTodoItems] = useState([]);
 
-  const [todoItems, setTodoItems] = useState(initialtodoItems);
-
-  // const handleNewItem = (itemName, itemDueDate) => {
-  //   const newTodoItems = [
-  //     ...todoItems,
-  //     { name: itemName, duedate: itemDueDate },
-  //   ];
-  //   setTodoItems(newTodoItems);
-  // };
-
-  const handleNewItem = (itemName, itemDueDate) => {
-    // setTodoItems((currValue) => {
-    //   const newTodoItems = [
-    //     ...currValue,
-    //     { name: itemName, duedate: itemDueDate },
-    //   ];
-    //   return newTodoItems;
-    // });
-
-    setTodoItems((currValue) => [
-      ...currValue,
-      { name: itemName, duedate: itemDueDate },
-    ]);
+  const handleNewItem = async (itemName, itemDueDate) => {
+    const item = await addItemToServer(itemName, itemDueDate);
+    setTodoItems((currValue) => [...currValue, item]);
   };
 
   const handleDeleteItem = (todoItemName) => {

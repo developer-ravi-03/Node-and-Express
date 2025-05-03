@@ -5,20 +5,24 @@ const path = require("path");
 const express = require("express");
 const { mongoose } = require("mongoose");
 const { pageNotFound } = require("./controller/errors");
-const DB_Path =
-  "mongodb+srv://root:root@completecoding.w0wmg.mongodb.net/Todo?retryWrites=true&w=majority&appName=CompleteCoding";
+require("dotenv").config();
+const DB_Path = process.env.MONGO_URI;
+const cors = require("cors");
 
 //local modules
+const todoItemsRouter = require("./routes/todoItemsRouter");
 
 const app = express();
 app.use(express.urlencoded());
-//serving css file
-app.use(express.static(path.join(rootdir, "public")));
+app.use(express.json());
+app.use(cors());
+
+app.use("/api/todo", todoItemsRouter);
 
 //error page
 app.use(pageNotFound);
 
-const PORT = 3001;
+const PORT = process.env.PORT;
 
 mongoose
   .connect(DB_Path)
